@@ -10,6 +10,7 @@ def insert_order(connection, order):
     order_data = (order['customer_name'], order['grand_total'], datetime.now())
 
     cursor.execute(order_query, order_data)
+    connection.commit()
     order_id = cursor.lastrowid
 
     order_details_query = ("INSERT INTO order_details "
@@ -62,12 +63,12 @@ def get_all_orders(connection):
     query = ("SELECT * FROM orders")
     cursor.execute(query)
     response = []
-    for (order_id, customer_name, total, dt) in cursor:
+    for (order_id, customer_name, total, datetime) in cursor:
         response.append({
             'order_id': order_id,
             'customer_name': customer_name,
             'total': total,
-            'datetime': dt,
+            'datetime': datetime
         })
 
     cursor.close()
