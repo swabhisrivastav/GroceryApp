@@ -1702,7 +1702,7 @@ a:hover {
 }
 
 .navbar-default {
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #fff
 }
 
 #sidebar-menu > ul > li > a {
@@ -1865,8 +1865,9 @@ input[type=search] {
 }
 
 .box-info .nav-tabs > li > a > i {
-    color: #8B91A0;
+    color: #8b91a0;
     margin-right: 8px;
+    
 }
 
 .box-info .nav-tabs > li.active > a, .box-info .nav-tabs > li.active > a:focus, .box-info .nav-tabs > li.active > a:hover {
@@ -2909,7 +2910,7 @@ table td[class*=col-], table th[class*=col-] {
 }
 
 .box-info.full {
-    margin: 20px;
+    margin: 30px;
     padding: 0;
     border-radius: 2px;
     background-color: #fff;

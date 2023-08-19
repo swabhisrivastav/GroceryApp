@@ -6,7 +6,7 @@ var productModal = $("#productModal");
             if(response) {
                 var table = '';
                 $.each(response, function(index, product) {
-                    table += '<tr data-id="'+ product.product_id +'" data-name="'+ product.product_name +'" data-type="'+ product.product_Type +'" data-unitsavailable="'+ product.units_Available + '" data-unit="'+ product.uom_id +'" data-price="'+ product.product_Price +'">' +
+                    table += '<tr data-id="'+ product.product_id +'" data-name="'+ product.product_name   + '" data-unit="'+ product.uom_id +'" data-price="'+ product.product_Price +'">' +
                         '<td>'+ product.product_name +'</td>'+
                         '<td>'+ product.uom_name +'</td>'+
                         '<td>'+ product.product_Price +'</td>'+
@@ -24,7 +24,7 @@ var productModal = $("#productModal");
         var requestPayload = {
             product_name: null,
             uom_id: null,
-            price_per_unit: null
+            product_Price: null
         };
         for (var i=0;i<data.length;++i) {
             var element = data[i];

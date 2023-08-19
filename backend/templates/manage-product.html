@@ -8,11 +8,10 @@
     <meta name="csrf-token" content="kmapods5wQ5L1hn7rcR9OPst7EsN0gC7SrHh3m9K"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,300,600,700">
-    <link media="all" type="text/css" rel="stylesheet" href="css/bootstrap.min.css">
-    <link media="all" type="text/css" rel="stylesheet" href="css/style.css?v=1.0">
-    <link media="all" type="text/css" rel="stylesheet" href="css/sidebar-menu.css?v=1.0">
-    <link media="all" type="text/css" rel="stylesheet" href="css/custom.css?v=1.3.3">
-</head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/sidebar-menu.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
 <body class="tooltips">
 <div class="container">
 
@@ -26,10 +25,10 @@
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav visible-lg visible-md limit-chars">
                         <ul class="breadcrumb">
-                            <a href="index.html">
+                            <a href="http://127.0.0.1:5000/">
                                 <i class="zmdi zmdi-view-dashboard zmdi-hc-fw" title="Orders"></i>
                             </a>
-                            <a href="manage-product.html">
+                            <a href="http://127.0.0.1:5000/getProducts">
                                 <i class="zmdi zmdi-assignment zmdi-hc-fw" title="Products"></i>
                             </a>
                         </ul>
@@ -59,7 +58,7 @@
                         <th style="width: 150px">Action</th>
                         </thead>
                         <tbody>
-
+                            
                         </tbody>
                     </table>
                 </div>
@@ -85,18 +84,6 @@
                             </div>
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <label >Product type</label>
-                                    <input class="form-control" placeholder="type" name="type" id="type" type="text" value="">
-                                </div>
-                            </div>
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label >units available</label>
-                                    <input class="form-control" placeholder="unitsavailable" name="unitsavailable" id="unitsavailable" type="text" value="">
-                                </div>
-                            </div>
-                            <div class="col-sm-12">
-                                <div class="form-group">
                                     <label >unit</label>
                                     <select name="uoms" id="uoms" class="form-control">
                                     </select>
@@ -105,7 +92,7 @@
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <label >Price per unit</label>
-                                    <input class="form-control" placeholder="price" name="price" id="price" type="text" value="">
+                                    <input class="form-control" placeholder="Price per unit" name="price" id="price" type="text" value="">
                                 </div>
                             </div>
                             
@@ -120,9 +107,9 @@
         </div>
     </div>
 </div>
-<script src="js/packages/jquery.min.js"></script>
-<script src="js/custom/common.js"></script>
-<script src="js/custom/manage-product.js"></script>
-<script src="js/packages/bootstrap.min.js"></script>
+<script src="{{url_for('static', filename='js/package/jquery.min.js')}}"></script>
+<script src="{{url_for('static', filename='js/custom/common.js')}}"></script>
+<script src="{{url_for('static', filename='js/custom/manage-product.js')}}"></script>
+<script src="{{url_for('static', filename='js/package/bootstrap.min.js')}}"></script>
 </body>
 </html>

@@ -4,36 +4,32 @@ def get_all_products(connection):
     
     cursor = connection.cursor()
 
-    query = ("SELECT product.product_id,product.product_name,product.product_Type,product.uom_id,product.units_Available,product.product_Price,uom.uom_name " 
+    query = ("SELECT product.product_id,product.product_name,product.uom_id,product.product_Price,uom.uom_name " 
             "FROM grocery_store.product inner join uom on product.uom_id = uom.uom_id")
 
     cursor.execute(query)
 
     response = []
 
-    for (product_id, product_name,product_Type,uom_id,units_Available,product_Price, uom_name) in cursor:
+    for (product_id, product_name,uom_id,product_Price, uom_name) in cursor:
         
         response.append(
             {
                 'product_id': product_id,
                 'product_name': product_name,
-                'product_type':product_Type,
                 'uom_id': uom_id,
-                'units_Available':units_Available,
-                'product_price': product_Price,
+                'product_Price': product_Price,
                 'uom_name': uom_name
             }
         )
-
-    
     return response
 
 def insert_new_product(connection, product):
     cursor = connection.cursor()
     query = ("INSERT INTO product "
-             "(product_id,product_name,product_Price,product_Type,units_Available,uom_id)"
-             "VALUES (%s, %s, %s, %s , %s , %s)")
-    data = (product['product_id'], product['product_name'],product['product_Price'],product['product_Type'],product['units_Available'],product['uom_id'])
+             "(product_name,uom_id,product_Price)"
+             "VALUES (%s, %s, %s)")
+    data = (product['product_name'], product['uom_id'],product['product_Price'])
     cursor.execute(query,data)
     connection.commit()
 
