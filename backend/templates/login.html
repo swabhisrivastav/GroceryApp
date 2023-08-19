@@ -1,27 +1,31 @@
-<!-- Store this code in 'login.html' file inside the 'templates' folder -->
-
+<!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="UTF-8">
-		<title> Login </title>
-		<link rel="stylesheet" href="{{ url_for('static', filename='style1.css') }}">		
+		<meta charset="utf-8">
+		<title>Login</title>
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
 	</head>
-	<body></br></br></br></br></br>
-		<div align="center">
-		<div align="center" class="border">
-			<div class="header">
-				<h1 class="word">Login</h1>
-			</div></br></br></br>
-			<h2 class="word">
-				<form action="{{ url_for('login') }}" method="post">
+	<body>
+		
+        <div class="login">
+			<h1>Login</h1>
+			<div class="links">
+                <a href="{{ url_for('login') }}" class="active">Login</a>
+				<a href="{{ url_for('register') }}">Register</a>
+			</div>
+			<form action="{{ url_for('login') }}" method="post">
+				<label for="username">
+					<i class="fas fa-user"></i>
+				</label>
+				<input type="text" name="username" placeholder="Username" id="username" required>
+				<label for="password">
+					<i class="fas fa-lock"></i>
+				</label>
+				<input type="password" name="password" placeholder="Password" id="password" required>
 				<div class="msg">{{ msg }}</div>
-					<input id="username" name="username" type="text" placeholder="Enter Your Username" class="textbox"/></br></br>
-					<input id="password" name="password" type="password" placeholder="Enter Your Password" class="textbox"/></br></br></br>
-					<input type="submit" class="btn" value="Sign In"></br></br>
-				</form>
-			</h2>
-			<p class="bottom">Don't have an account? <a class="bottom" href="{{url_for('register')}}"> Sign Up here</a></p>
-		</div>
+				<input type="submit" value="Login">
+			</form>
 		</div>
 	</body>
 </html>
