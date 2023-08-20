@@ -49,20 +49,21 @@
     <div class="right content-page">
         <div class="body content rows scroll-y">
             <div class="box-info full" id="taskFormContainer">
-                <h2>Manage Products</h2>
+                <h2>Employees</h2>
                 <div class="panel-body pt-0">
                     <div class="row mb-4">
                         <div class="col-sm-12">
-                            <button type="button" class="btn btn-sm btn-primary pull-right" data-toggle="modal" data-target="#productModal">
-                                Add New Product
+                            <button type="button" class="btn btn-sm btn-primary pull-right" data-toggle="modal" data-target="#employeeModal">
+                                Add New Employee
                             </button>
                         </div>
                     </div>
                     <table class="table table-bordered">
                         <thead>
-                        <th>Name</th>
-                        <th>Unit</th>
-                        <th>Price Per Unit</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>designation</th>
+                        <th>date of joining</th>
                         <th style="width: 150px">Action</th>
                         </thead>
                         <tbody>
@@ -74,33 +75,38 @@
         </div>
     </div>
 
-    <div class="modal fade-scale" id="productModal" role="dialog" data-backdrop="static">
+    <div class="modal fade-scale" id="employeeModal" role="dialog" data-backdrop="static">
         <div class="modal-dialog ">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Add New Product</h4>
+                    <h4 class="modal-title">Add New Employee</h4>
                 </div>
                 <div class="modal-body">
-                    <form id="productForm">
+                    <form id="employeeForm">
                         <input type="hidden" name="id" id="id" value="0">
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <label >name</label>
-                                    <input class="form-control" placeholder="name" name="name" id="name" type="text" value="">
+                                    <label > First Name</label>
+                                    <input class="form-control" placeholder="first name" name="first_name" id="first_name" type="text" value="">
                                 </div>
                             </div>
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <label >unit</label>
-                                    <select name="uoms" id="uoms" class="form-control">
-                                    </select>
+                                    <label > Last Name</label>
+                                    <input class="form-control" placeholder="last name" name="last_name" id="last_name" type="text" value="">
                                 </div>
                             </div>
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <label >Price per unit</label>
-                                    <input class="form-control" placeholder="Price per unit" name="price" id="price" type="text" value="">
+                                    <label >Designation</label>
+                                    <input class="form-control" placeholder="designation" name="designation" id="designation" type="text" value="">
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label >Date of joining</label>
+                                    <input class="form-control" placeholder="date of joining" name="date_of_joining" id="date_of_joining" type="date" value="">
                                 </div>
                             </div>
                             
@@ -109,7 +115,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="saveProduct">Save</button>
+                    <button type="button" class="btn btn-primary" id="saveEmployee">Save</button>
                 </div>
             </div>
         </div>
@@ -117,7 +123,7 @@
 </div>
 <script src="{{url_for('static', filename='js/package/jquery.min.js')}}"></script>
 <script src="{{url_for('static', filename='js/custom/common.js')}}"></script>
-<script src="{{url_for('static', filename='js/custom/manage-product.js')}}"></script>
+<script src="{{url_for('static', filename='js/custom/employee.js')}}"></script>
 <script src="{{url_for('static', filename='js/package/bootstrap.min.js')}}"></script>
 </body>
 </html>

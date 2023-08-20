@@ -7,6 +7,7 @@ import re
 import product_dao
 import uom_dao
 import orders_dao
+import employee_dao
 
 db_config = {
     'user': 'root',
@@ -176,7 +177,39 @@ def register():
         msg = 'Please fill out the form!'
     return render_template('register.html', msg=msg)
 	
+@app.route('/getEmployees', methods=['GET'])
+def get_employees():
+    return render_template('employee.html')
+
+@app.route('/api/getEmployees', methods=['GET'])
+def api_get_employees():
+    response = employee_dao.get_all_employees(connection)
+    response = jsonify(response)
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
+
+@app.route('/api/insertEmployee', methods=['POST'])
+def insert_employees():
+    request_payload = json.loads(request.form['data'])
+    employee_id = employee_dao.insert_new_employee(connection, request_payload)
+    response = jsonify({
+        'employee': employee_id
+    })
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
+
+@app.route('/deleteEmployee', methods=['POST'])
+def delete_employee():
+    return_id = employee_dao.delete_employee(connection, request.form['employee_id'])
+    response = jsonify({
+        'employee_id': return_id
+    })
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
+
 if __name__ == '__main__':
     print("Starting Python Flask Server For Grocery Store Management System")
     app.secret_key = 'your_secret_key'
     app.run(port=5000)
+
+
