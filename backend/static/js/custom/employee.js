@@ -50,12 +50,12 @@ var employeeModal = $("#employeeModal");
         });
     });
 
-    $(document).on("click", ".delete-employee", function (){
+    $(document).on("click", ".delete-product", function (){
         var tr = $(this).closest('tr');
         var data = {
             employee_id : tr.data('id')
         };
-        var isDelete = confirm("Are you sure to delete "+ tr.data('first_name') +" item?");
+        var isDelete = confirm("Are you sure to delete "+ tr.data('first_name') );
         if (isDelete) {
             callApi("POST", employeeDeleteApiUrl, data);
         }
