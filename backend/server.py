@@ -33,7 +33,7 @@ def home_page():
     return render_template('homepage.html')
 
 
-@app.route('/')
+@app.route('/index')
 def first():
     return render_template('index.html')
 
@@ -100,7 +100,7 @@ def delete_product():
     return response
 
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def login():
     msg = ''
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
