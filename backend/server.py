@@ -28,10 +28,6 @@ app = Flask(__name__,template_folder="templates")
 
 connection = get_sql_connection()
 
-@app.route('/homepage')
-def home_page():
-    return render_template('homepage.html')
-
 
 @app.route('/index')
 def first():
