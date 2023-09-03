@@ -1,33 +1,19 @@
 from flask import Flask,request,jsonify,render_template,redirect,url_for, session
+import re,hashlib
 from sql_connection import get_sql_connection
-import mysql.connector
 import json
-import re
 
 import product_dao
 import uom_dao
 import orders_dao
 import employee_dao
 
-db_config = {
-    'user': 'root',
-    'password': 'Swabhi@16',
-    'host': '127.0.0.1',
-    'database': 'grocery_store'
-}
-def get_sql_connection():
-    try:
-        connection = mysql.connector.connect(**db_config)
-        return connection
-    except mysql.connector.Error as err:
-        print(f"Error: {err}")
-        return None
+ 
+app = Flask(__name__)
 
-
-app = Flask(__name__,template_folder="templates")
+app.secret_key='your secret key'
 
 connection = get_sql_connection()
-
 
 @app.route('/index')
 def first():
@@ -102,30 +88,23 @@ def login():
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
         username = request.form['username']
         password = request.form['password']
-        cursor = None
-        try:
-            connection = get_sql_connection()
-            cursor = connection.cursor(dictionary=True)  # Use a dictionary cursor
+        hash=password+app.secret_key
+        hash = hashlib.sha1(hash.encode())
+        password = hash.hexdigest()
 
-            # Use parameterized query to prevent SQL injection
-            cursor.execute('SELECT * FROM accounts WHERE username = %s AND password = %s', (username, password))
-            account = cursor.fetchone()
-            if account:
-                session['loggedin'] = True
-                session['id'] = account['id']
-                session['username'] = account['username']
-                msg = 'Logged in successfully!'
-                return render_template('index.html', msg=msg)
-            else:
-                msg = 'Incorrect username / password!'
-        except mysql.connector.Error as err:
-            print(f"Database error: {err}")
-            msg = 'Database error'
-        finally:
-            if cursor:
-                cursor.close()
-            if connection:
-                connection.close()
+        cursor=connection.cursor(dictionary=True)
+        cursor.execute('SELECT * FROM accounts WHERE username = %s AND password = %s', (username, password))
+        account = cursor.fetchone()
+        
+        if account:
+            session['loggedin'] = True
+            session['id'] = account['id']
+            session['username'] = account['username']
+            msg = 'Logged in successfully!'
+            # Redirect to home page
+            return render_template('index.html', msg=msg)
+        else:
+            msg = 'Incorrect username / password!'
     return render_template('login.html', msg=msg)
 
 
@@ -134,7 +113,10 @@ def logout():
     session.pop('loggedin', None)
     session.pop('id', None)
     session.pop('username', None)
+    # Redirect to login page
     return redirect(url_for('login'))
+
+import re
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -143,35 +125,33 @@ def register():
         username = request.form['username']
         password = request.form['password']
         email = request.form['email']
-        try:
-            connection = get_sql_connection()
-            cursor = connection.cursor(dictionary=True)
+        
+        cursor = connection.cursor()
+        cursor.execute('SELECT * FROM accounts WHERE username = %s OR email = %s', (username, email))
+        account = cursor.fetchone()
+
+        if account:
+            msg = 'Account already exists!'
+        elif not re.match(r'[^@]+@[^@]+\.[^@]+', email):
+            msg = 'Invalid email address!'
+        elif not re.match(r'[A-Za-z0-9]+', username):
+            msg = 'Username must contain only characters and numbers!'
+        elif not (len(password) >= 8 and re.search(r'[a-z]', password) and re.search(r'[A-Z]', password) and re.search(r'[0-9]', password) and re.search(r'[!@#$%^&*(),.?":{}|<>]', password)):
+            msg = 'Password must be at least 8 characters long and contain at least one lowercase letter, one uppercase letter, one number, and one special character!'
+        else:
+            # Hash the password
+            hash = password + app.secret_key
+            hash = hashlib.sha1(hash.encode())
+            password = hash.hexdigest()
             
-            cursor.execute('SELECT * FROM accounts WHERE username = %s', (username,))
-            account = cursor.fetchone()
-            if account:
-                msg = 'Account already exists!'
-            elif not re.match(r'[^@]+@[^@]+\.[^@]+', email):
-                msg = 'Invalid email address!'
-            elif not re.match(r'[A-Za-z0-9]+', username):
-                msg = 'Username must contain only characters and numbers!'
-            elif not username or not password or not email:
-                msg = 'Please fill out the form!'
-            else:
-                cursor.execute('INSERT INTO accounts (username, password, email) VALUES (%s, %s, %s)', (username, password, email))
-                connection.commit()
-                msg = 'You have successfully registered!'
-        except mysql.connector.Error as err:
-            print(f"Database error: {err}")
-            msg = 'Database error'
-        finally:
-            if cursor:
-                cursor.close()
-            if connection:
-                connection.close()
+            cursor.execute('INSERT INTO accounts VALUES (NULL,%s, %s, %s)', (username, password, email))
+            connection.commit()
+            msg = 'You have successfully registered!'
+         
     elif request.method == 'POST':
         msg = 'Please fill out the form!'
     return render_template('register.html', msg=msg)
+
 	
 @app.route('/getEmployees', methods=['GET'])
 def get_employees():
@@ -205,7 +185,6 @@ def delete_employee():
 
 if __name__ == '__main__':
     print("Starting Python Flask Server For Grocery Store Management System")
-    app.secret_key = 'your_secret_key'
     app.run(port=5000)
 
 
