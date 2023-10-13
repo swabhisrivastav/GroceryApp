@@ -13,5 +13,8 @@ Frontend-
 Backend-
 MySQL database is used for storing, managing, and retrieving structured data.
 Framework:- Python Flask  serves as the backend framework to handle server-side logic and communicate with the MySQL database.
+![image](https://github.com/swabhisrivastav/GroceryApp/assets/98212572/1efd5ee8-5307-4abd-b672-2ef85db0a461)
+![image](https://github.com/swabhisrivastav/GroceryApp/assets/98212572/f525ec9a-84db-48ef-8f4d-f30ad5f03899)
+
 
 
